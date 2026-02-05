@@ -1,4 +1,8 @@
-require('dotenv').config();
+// Load dotenv only in development (not needed on Vercel)
+if (process.env.NODE_ENV !== 'production' && !process.env.VERCEL) {
+  require('dotenv').config();
+}
+
 const app = require('./app');
 const config = require('./config/config');
 
