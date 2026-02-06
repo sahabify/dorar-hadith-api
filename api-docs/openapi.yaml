@@ -216,6 +216,27 @@ paths:
               schema:
                 $ref: '#/components/schemas/SiteSingleHadithResponse'
 
+  /site/hadith/usul/{id}:
+    get:
+      summary: Get usul (sources) of a hadith by ID
+      description: Returns the hadith with its usul (أصول الحديث) and chains of narration
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: Hadith ID (e.g. 5mtakqyd)
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SiteUsulHadithResponse'
+        '404':
+          description: No usul hadith found for this ID
+
   /site/sharh/{id}:
     get:
       summary: Get sharh (explanation) for a hadith by ID
@@ -518,3 +539,61 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/SiteHadithItem'
+
+    SiteUsulHadithResponse:
+      type: object
+      properties:
+        metadata:
+          type: object
+          properties:
+            isCached:
+              type: boolean
+        data:
+          type: object
+          properties:
+            hadith:
+              type: string
+            rawi:
+              type: string
+            mohdith:
+              type: string
+            mohdithId:
+              type: string
+            book:
+              type: string
+            bookId:
+              type: string
+            numberOrPage:
+              type: string
+            grade:
+              type: string
+            explainGrade:
+              type: string
+            hadithId:
+              type: string
+            hasSimilarHadith:
+              type: boolean
+            hasAlternateHadithSahih:
+              type: boolean
+            hasUsulHadith:
+              type: boolean
+            usulHadith:
+              type: object
+              properties:
+                sources:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      source:
+                        type: string
+                        description: مصدر الحديث مع الصفحة
+                      chain:
+                        type: string
+                        description: سلسلة الرواة
+                      hadithText:
+                        type: string
+                        description: نص الحديث
+                count:
+                  type: integer
+                  description: عدد المصادر
